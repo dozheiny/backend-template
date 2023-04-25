@@ -1,0 +1,21 @@
+name: Build
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        goarch: [amd64, arm64]
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+      - name: Setup
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: "go.mod"
+      - name: Build
+        run: go build ./...
